@@ -1,1 +1,37 @@
 # 2024-12-18
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Step6.マーカーをクリックしてポップアップ表示とツールチップ表示|Lefletの基本|埼玉大学谷謙二研究室</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
+  <script>
+    function init() {
+      // Create a map centered at the specified coordinates without the zoom control
+      var map = L.map('mapcontainer', { zoomControl: false });
+      var mpoint = [35.8627, 139.6072];
+      map.setView(mpoint, 15);
+
+      // Add a tile layer to the map with attribution
+      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+        attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+      }).addTo(map);
+
+      // Popup content with HTML (image included)
+      var sucontents = "交通事故<br><img src='su.jpg' width='500' height='375'>";
+      // Create popup objects with content
+      var popup1 = L.popup({ maxWidth: 550 }).setContent(sucontents);
+      var popup2 = L.popup().setContent("工事中");
+
+      // Add markers with popups and tooltips
+      L.marker(mpoint, { draggable: true }).bindPopup(popup1).bindTooltip("交通事故発生地点").addTo(map);
+      L.marker([35.8561, 139.6098]).bindPopup(popup2).bindTooltip("工事中").addTo(map);
+    }
+  </script>
+</head>
+<body onload="init()">
+  <!-- Container for the map -->
+  <div id="mapcontainer" style="position:absolute;top:0;left:0;right:0;bottom:0;"></div>
+</body>
+</html>
